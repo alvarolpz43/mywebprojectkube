@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myproyectoweb
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myproyectoweb
+  template:
+    metadata:
+      labels:
+        app: myproyectoweb
+    spec:
+      containers:
+      - name: myproyectoweb
+        image: lopez366/myproyectoweb:1.0.0
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myproyectoweb-service
+spec:
+  selector:
+    app: myproyectoweb
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
